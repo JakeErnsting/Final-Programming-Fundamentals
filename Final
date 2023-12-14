@@ -1,0 +1,85 @@
+# https://stackoverflow.com/questions/56028416/use-a-variable-number-of-conditions-to-select-rows-whose-column-value-equals-som
+# Resource I used to define certain varibales to conditions in my array
+import random
+
+    #Converts celsius to farenheit
+def celsius_to_fahrenheit(celsius):
+    return celsius * 9/5 + 32
+
+def adjust_thermostat(temperature_fahrenheit):
+    # Adjust the thermostat based on the outside temperature
+    if temperature_fahrenheit is not None:
+        if temperature_fahrenheit <= 40:
+            return 72  
+        elif temperature_fahrenheit >= 80:
+            return 68 
+        else:
+            return 70 
+    else:
+        return None
+    # Recomend clothing based off weather and temperature
+def recommend_clothing(weather_type, temperature_fahrenheit):
+    if temperature_fahrenheit is not None:
+        print(f"\nWeather: {weather_type}")
+        print(f"Temperature: {temperature_fahrenheit}°F\n")
+    # Allow only certain weather conditions based off of temp
+        if temperature_fahrenheit <= 40:
+            allowed_weather_types = ["Snowy", "Clear but cold"]
+        else:
+            allowed_weather_types = ["Sunny", "Rainy"]
+    # All weater options have defined clothing
+        if weather_type.lower() in map(str.lower, allowed_weather_types):
+            if weather_type.lower() == "rainy":
+                print("Recommended clothing for rainy weather:")
+                print("- Waterproof jacket")
+                print("- Umbrella")
+                print("- Waterproof shoes")
+            elif weather_type.lower() == "sunny":
+                print("Recommended clothing for sunny weather:")
+                print("- Sunscreen")
+                print("- Sunglasses")
+                print("- Hat")
+                print("- Light clothing")
+            elif weather_type.lower() == "clear but cold":
+                print("Recommended clothing for sunny and cold weather:")
+                print("- Socks")
+                print("- Sweatshirt")
+                print("- Stocking Cap")
+                print("- Pants")
+            elif weather_type.lower() == "snowy":
+                print("Recommended clothing for snowy weather:")
+                print("- Insulated jacket")
+                print("- Snow boots")
+                print("- Gloves")
+                print("- Hat")
+            else:
+                print("Unknown weather type. Clothing recommendation not available.")
+
+            # Get recommended inside thermostat temperature
+            recommended_inside_temperature = adjust_thermostat(temperature_fahrenheit)
+            print(f"\nRecommended inside thermostat temperature: {recommended_inside_temperature}°F")
+        else:
+            print(f"Weather type '{weather_type}' not allowed for the current temperature range.")
+    else:
+        print("Unable to determine outside temperature. Cannot provide recommendations.")
+
+if __name__ == "__main__":
+    while True:
+        try:
+            # Get user input for outside temperature in Fahrenheit
+            temperature_fahrenheit = float(input("Enter the outside temperature in Fahrenheit (type 'exit' to end): "))
+            
+            if temperature_fahrenheit == 'exit':
+                print("Exiting the program.")
+                break
+
+            if temperature_fahrenheit <= 40:
+                possible_weather_types = ["Clear but cold", "Snowy"]
+            else:
+                possible_weather_types = ["Sunny", "Rainy"]
+
+            random_weather_type = random.choice(possible_weather_types)
+            
+            recommend_clothing(random_weather_type, temperature_fahrenheit)
+        except ValueError:
+            print("Invalid input. Please enter a valid temperature.")
